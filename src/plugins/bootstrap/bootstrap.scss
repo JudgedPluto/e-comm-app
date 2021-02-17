@@ -1,0 +1,400 @@
+// $primary: #842029;
+$primary: #c50021;
+$variants: (
+  "light-variant": #dee2e6,
+  "whatsapp-variant": #075e54
+);
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+$theme-colors: map-merge($theme-colors, $variants);
+
+$enable-smooth-scroll: false;
+
+@mixin button-variant(
+  $background,
+  $border,
+  $color: color-contrast($background),
+  $hover-background:
+    if(
+      $color == $color-contrast-light,
+      shade-color($background, 15%),
+      tint-color($background, 15%)
+    ),
+  $hover-border:
+    if(
+      $color == $color-contrast-light,
+      shade-color($border, 20%),
+      tint-color($border, 10%)
+    ),
+  $hover-color: color-contrast($hover-background),
+  $active-background:
+    if(
+      $color == $color-contrast-light,
+      shade-color($background, 20%),
+      tint-color($background, 20%)
+    ),
+  $active-border:
+    if(
+      $color == $color-contrast-light,
+      shade-color($border, 25%),
+      tint-color($border, 10%)
+    ),
+  $active-color: color-contrast($active-background),
+  $disabled-background: $background,
+  $disabled-border: $border,
+  $disabled-color: color-contrast($disabled-background)
+) {
+  color: $color;
+  @include gradient-bg($background);
+  border-color: $border;
+  @include box-shadow($btn-box-shadow);
+
+  & svg {
+    fill: $color;
+  }
+
+  &:hover {
+    color: $hover-color;
+    @include gradient-bg($hover-background);
+    border-color: $hover-border;
+
+    & svg {
+      fill: $hover-color;
+    }
+  }
+
+  .btn-check:focus + &,
+  &:focus {
+    color: $hover-color;
+    @include gradient-bg($hover-background);
+    border-color: $hover-border;
+    @if $enable-shadows {
+      @include box-shadow(
+        $btn-box-shadow,
+        0 0 0 $btn-focus-width rgba(mix($color, $border, 15%), 0.5)
+      );
+    } @else {
+      // Avoid using mixin so we can pass custom focus shadow properly
+      box-shadow: 0 0 0 $btn-focus-width rgba(mix($color, $border, 15%), 0.5);
+    }
+
+    & svg {
+      fill: $hover-color;
+    }
+  }
+
+  .btn-check:checked + &,
+  .btn-check:active + &,
+  &:active,
+  &.active,
+  .show > &.dropdown-toggle {
+    color: $active-color;
+    background-color: $active-background;
+    // Remove CSS gradients if they're enabled
+    background-image: if($enable-gradients, none, null);
+    border-color: $active-border;
+
+    & svg {
+      fill: $active-color;
+    }
+
+    &:focus {
+      @if $enable-shadows {
+        @include box-shadow(
+          $btn-active-box-shadow,
+          0 0 0 $btn-focus-width rgba(mix($color, $border, 15%), 0.5)
+        );
+      } @else {
+        // Avoid using mixin so we can pass custom focus shadow properly
+        box-shadow: 0 0 0 $btn-focus-width rgba(mix($color, $border, 15%), 0.5);
+      }
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $disabled-color;
+    background-color: $disabled-background;
+    // Remove CSS gradients if they're enabled
+    background-image: if($enable-gradients, none, null);
+    border-color: $disabled-border;
+
+    & svg {
+      fill: $disabled-color;
+    }
+  }
+}
+
+@mixin button-outline-variant(
+  $color,
+  $color-hover: color-contrast($color),
+  $active-background: $color,
+  $active-border: $color,
+  $active-color: color-contrast($active-background)
+) {
+  color: $color;
+  border-color: $color;
+
+  & svg {
+    fill: $color;
+  }
+
+  &:hover {
+    color: $color-hover;
+    background-color: $active-background;
+    border-color: $active-border;
+
+    & svg {
+      fill: $color-hover;
+    }
+  }
+
+  .btn-check:focus + &,
+  &:focus {
+    box-shadow: 0 0 0 $btn-focus-width rgba($color, 0.5);
+  }
+
+  .btn-check:checked + &,
+  .btn-check:active + &,
+  &:active,
+  &.active,
+  &.dropdown-toggle.show {
+    color: $active-color;
+    background-color: $active-background;
+    border-color: $active-border;
+
+    & svg {
+      fill: $active-color;
+    }
+
+    &:focus {
+      @if $enable-shadows {
+        @include box-shadow(
+          $btn-active-box-shadow,
+          0 0 0 $btn-focus-width rgba($color, 0.5)
+        );
+      } @else {
+        // Avoid using mixin so we can pass custom focus shadow properly
+        box-shadow: 0 0 0 $btn-focus-width rgba($color, 0.5);
+      }
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $color;
+    background-color: transparent;
+
+    & svg {
+      fill: $color;
+    }
+  }
+}
+
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/containers";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/dropdown";
+@import "~bootstrap/scss/button-group";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
+@import "~bootstrap/scss/card";
+@import "~bootstrap/scss/accordion";
+@import "~bootstrap/scss/breadcrumb";
+@import "~bootstrap/scss/pagination";
+@import "~bootstrap/scss/badge";
+@import "~bootstrap/scss/alert";
+@import "~bootstrap/scss/progress";
+@import "~bootstrap/scss/list-group";
+@import "~bootstrap/scss/close";
+@import "~bootstrap/scss/toasts";
+@import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/tooltip";
+@import "~bootstrap/scss/popover";
+@import "~bootstrap/scss/carousel";
+@import "~bootstrap/scss/spinners";
+@import "~bootstrap/scss/helpers";
+@import "~bootstrap/scss/utilities/api";
+
+$object-fit: (fill, contain, cover, scale-down, none);
+
+.btn {
+  & svg {
+    @include transition(fill 0.15s ease-in-out);
+  }
+}
+
+.btn-link {
+  & svg {
+    fill: $btn-link-color;
+  }
+}
+
+.btn-icon {
+  @include button-size($btn-padding-x, $btn-padding-x, 0, 50%);
+}
+
+.btn-icon-lg {
+  @include button-size($btn-padding-x-lg, $btn-padding-x-lg, 0, 50%);
+}
+
+.btn-icon-sm {
+  @include button-size($btn-padding-x-sm, $btn-padding-x-sm, 0, 50%);
+}
+
+.navbar-logo {
+  width: auto;
+  height: calc(90px - #{$navbar-padding-y * 2} - #{map-get($spacers, 2) * 2});
+}
+
+@include media-breakpoint-up(lg) {
+  .navbar-logo {
+    width: auto;
+    height: calc(
+      110px - #{$navbar-padding-y * 2} - #{map-get($spacers, 2) * 2}
+    );
+  }
+}
+
+.p-guide-down {
+  width: 224px;
+  padding-top: 32px;
+  padding-bottom: 56px;
+  padding-left: 64px;
+}
+
+.p-guide-up {
+  width: 224px;
+  padding-top: 56px;
+  padding-bottom: 32px;
+  padding-left: 64px;
+}
+
+@include media-breakpoint-up(xl) {
+  .p-guide-down {
+    width: 256px;
+    padding-left: 96px;
+  }
+
+  .p-guide-up {
+    width: 256px;
+    padding-left: 96px;
+  }
+}
+
+@each $value in $object-fit {
+  .object-fit-#{$value} {
+    object-fit: $value !important;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .fill-#{$color} {
+    fill: $value;
+  }
+}
+
+.img-thumbnail {
+  &.thumb-size {
+    width: 96px;
+    height: 96px;
+  }
+
+  &.thumb-size-sm {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.spinner-border {
+  &.thumb-size {
+    margin: calc(48px - 1rem);
+  }
+
+  &.thumb-size-sm {
+    margin: calc(24px - 1rem);
+  }
+}
+
+.status-icon {
+  &.thumb-size {
+    margin: 32px;
+  }
+
+  &.thumb-size-sm {
+    margin: 8px;
+  }
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sidenav {
+  overflow-x: hidden;
+  width: 0;
+  @include transition(width 0.35s ease);
+
+  &.show {
+    width: 100%;
+  }
+}
+
+.sidenav-content {
+  .sidenav & {
+    opacity: 0;
+    @include transition(opacity 0.35s cubic-bezier(0, 1, 0, 1));
+  }
+
+  .sidenav.show & {
+    opacity: 1;
+    @include transition(opacity 0.35s cubic-bezier(1, 0, 1, 0));
+  }
+}
+
+.toast-container {
+  z-index: 1080;
+
+  > :not(:first-child) {
+    margin-top: $toast-spacing;
+  }
+
+  > :not(:last-child) {
+    margin-bottom: unset;
+  }
+}
+
+a {
+  text-decoration: none;
+
+  &:not(.btn):hover {
+    text-decoration: underline;
+  }
+}
+
+.ratio-4x3 {
+  @include media-breakpoint-up(lg) {
+    --aspect-ratio: 100%;
+  }
+}
+
+.h-img {
+  height: 200px;
+
+  @include media-breakpoint-up(lg) {
+    height: 350px;
+  }
+}
